@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+<link type="text/css" rel="stylesheet" href="css/main_css.css"  />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard,package.route&lang=ru-RU" type="text/javascript"></script>
+<title>Searching taxi</title>
+</head>
+<body>
+<div id="main">
+    	<div id="header"></div> 
+    <div id="container">
+    <div id="nav_top">
+    	<ul>
+        	<li><a href=''>город: Пятигорск</a></li>
+        </ul>
+    </div>
+    <div id="content">
+    	<div id="select_street">
+        	<div id="search_taxi_form">
+        	<form id="form_search" method="post">
+            	<p><input onfocus="clearInput(this.id)" id="input_search" class="inputSearch" name="from" type="text" value="Откуда едем" /></p>
+                <p><input onfocus="clearInput(this.id)" id="input_search_2" class="inputSearch" name="to" type="text" value="Куда едем" /></p>
+                <p><input onclick='init()' class="Button_search" type="submit" value="искать" /></p>
+            </form>
+            </div>
+        </div>
+        <div id="result_map">
+        	<div id="map" style="width:490px; height:390px;"></div>
+        </div>
+    </div>
+    </div>
+</div>
+<script type="text/javascript">
+function clearInput(idInputSearch){
+		document.getElementById(idInputSearch).setAttribute('value','');
+	}
+
+
+//Инициализация карты яндекса
+ymaps.ready(init);
+    function init(){     
+   var  myMap;
+        myMap = new ymaps.Map ("map", {
+            center: [55.76, 37.64],
+            zoom: 12,
+        });
+
+ymaps.route(['Москва, Батайский проезд д.21', 'Москва, ул. Ключевая 8']).then(
+    function (route) {
+        myMap.geoObjects.add(route);
+    },
+    function (error) {
+        alert('Возникла ошибка: ' + error.message);
+    }
+);
+	// Ползунок изменения масштаба
+myMap.controls.add('zoomControl', {left : '10px'});
+    }
+</script>
+</body>
+</html>
